@@ -67,3 +67,13 @@ def get_braille_characters(dot_positions: list[int]):
     input: dot positions (array[int])
     output: character symbols (array[str])
     '''
+    {
+        [1]: '⠁',
+        [1,2]: '⠃',
+        [1,]: '⠉',
+        [1, ,5]: '⠙',
+        [1,5]: '⠑',
+        [1,2,]: '⠋',
+        
+        
+    }

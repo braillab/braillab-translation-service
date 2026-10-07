@@ -12,7 +12,7 @@ class LanguageInfo(BaseModel):
   native_name: str
   grade_supported: int
 
-class GeneratorCharacter(BaseModel):
+class Indicators(BaseModel):
   number: List[str]
   mayus: List[str]
 

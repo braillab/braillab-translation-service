@@ -1,6 +1,6 @@
 import json
 from fastapi import FastAPI, Response
-from schemas import InitLangRequest, TranslateRequest
+from schemas import InitLangRequest, TranslateRequest, LanguageInfo, Indicators, LanguageSchema
 from utils import load_json_map
 
 app = FastAPI(title="Braillab Translation Service")
@@ -26,9 +26,9 @@ def translate(request: TranslateRequest):
     print(f"current language es {app.state.current_language}")
     print(f"current text es {request.text}")
 
-@app.post("/create_lang")
-def create_language():
-    
+@app.post("/create_lang", status_code=201)
+def create_language(lang: LanguageSchema):
+    return {"message": "created", "language": lang}
 
 @app.get("/health")
 def health():
