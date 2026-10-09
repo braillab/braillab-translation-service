@@ -1,0 +1,26 @@
+name: Validate language data
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.json'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13.5'
+          cache: 'pip'
+
+      - run: pip install -r requirements.txt
+
+      - run: |
+          for file in $(git ls-files '*.json'); do
+            echo "Testing $file"
+            jq empty "$file"
+            pytest --data_name=$file
+          done    
