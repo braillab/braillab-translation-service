@@ -7,9 +7,6 @@ on:
       - 'tests/**'
       - '**.json'
   pull_request:
-    paths:
-      - 'tests/**'
-      - '**.json'
 
 jobs:
   build:
