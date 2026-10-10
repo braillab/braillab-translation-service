@@ -14,21 +14,34 @@ def translate_sequence(text: str, lang_id: str):
     output: result
     """
     full_lang = load_json_map(lang_id)
+    has_contractions: bool = True if full_lang["language"]["grade_supported"] > 1 else False
     result = []
-    in_number = False
-    in_caps = False
     text = str(text)
 
-    for i in range(len(text)):
-        char = text[i]
-        next_char = text[i + 1] if i + 1 < len(text) else None
-        output, in_number, in_caps = translate_char(
-            char, in_number, in_caps, full_lang, next_char
-        )
-        result.extend(output)
-    
-    cleaned_result = list(filter(None, result))
+    words = text.split()
 
+    for index, word in enumerate(words):
+        in_number = False
+        in_caps = False
+
+        if index > 0:
+            result.append(" ")
+
+        if has_contractions:
+            contractions = full_lang.get("contractions", {})
+            if word in contractions:
+                result.append(contractions[word])
+                continue
+    
+        for i in range(len(word)):
+            char = word[i]
+            next_char = word[i + 1] if i + 1 < len(word) else None
+            output, in_number, in_caps = translate_char(
+                char, in_number, in_caps, full_lang, next_char
+            )
+            result.extend(output)
+            
+    cleaned_result = list(filter(None, result))
     return cleaned_result
 
 def translate_char(braille_char: str, in_number: bool, in_caps: bool, full_lang: list, next_char: str):
@@ -62,18 +75,17 @@ def translate_char(braille_char: str, in_number: bool, in_caps: bool, full_lang:
     braille_char = full_lang["punctuation"][braille_char]
     return [braille_char], False, False
     
+# TODO: to be build.
 def get_braille_characters(dot_positions: list[int]):
     '''
     input: dot positions (array[int])
     output: character symbols (array[str])
     '''
-    {
+    braille_map = {
         [1]: '⠁',
         [1,2]: '⠃',
-        [1,]: '⠉',
-        [1, ,5]: '⠙',
+        [1,3]: '⠉',
+        [1,4,5]: '⠙',
         [1,5]: '⠑',
-        [1,2,]: '⠋',
-        
-        
+        [1,2,4]: '⠋',
     }
