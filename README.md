@@ -1,6 +1,10 @@
 # Braille Translation Service
 
-Convert text to braille cell dot positions in Grade 1 and 2.
+Convert **text** to **braille** cell dot positions in Grade 1 and 2.
+
+---
+ 
+The braillab-translation-service is a core component of the wider Braillab project. Braillab is an integrated learning ecosystem designed to make Braille literacy accessible by seamlessly connecting an interactive web learning platform with a physical Braille display. This service handles the real-time translation of text into Braille patterns required by the hardware.
 
 ## Supported (**v0.9**)
 
