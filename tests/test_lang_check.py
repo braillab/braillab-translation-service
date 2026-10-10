@@ -32,5 +32,5 @@ def test_lang_info(data):
 
 def test_grade(data):
     # grade 3 is omitted, but will be considered during the final implementation.
-    expected = 2 if "contractions" in data else 1
+    expected = 2 if len(data.get("contractions", [])) > 0 else 1
     assert data["language"]["grade_supported"] == expected
