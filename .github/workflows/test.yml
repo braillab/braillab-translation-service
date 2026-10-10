@@ -4,6 +4,11 @@ on:
   push:
     branches: [ main ]
     paths:
+      - 'tests/**'
+      - '**.json'
+  pull_request:
+    paths:
+      - 'tests/**'
       - '**.json'
 
 jobs:
@@ -19,8 +24,11 @@ jobs:
       - run: pip install -r requirements.txt
 
       - run: |
-          for file in $(git ls-files '*.json'); do
-            echo "Testing $file"
-            jq empty "$file"
-            pytest --data_name=$file
-          done    
+          status=0
+          for file in languages/*.json; do
+            name=$(basename "$file" .json)
+            [[ "$name" == _* ]] && continue   # skip _template.json
+            echo "Testing $name"
+            jq empty "$file" && pytest --data_name="$name" || status=1
+          done
+          exit $status
