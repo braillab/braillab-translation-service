@@ -3,7 +3,7 @@
         "code": "en",
         "name": "English",
         "native_name": "English",
-        "grade_supported": 1
+        "grade_supported": 2
     },
     "indicators": {
         "number": [3,4,5,6],
